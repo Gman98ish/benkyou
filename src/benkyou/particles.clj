@@ -73,6 +73,14 @@
    [:p "watashi (meaning I) is the subject of the sentence, shinda is a verb meaning died"]
    [:p "so this sentence means 'I died'"]])
 
+(defn explain-n-particle
+  [token]
+  [:div
+   [:p (str "ん (pronounced unn) can be used when offering up an explanation or when you want "
+            "the person you're talking to respond in more detail")]
+   [:br]
+   [:p "It's a very nuanced particle, but it makes your Japanese sound really natural when used properly"]])
+
 (defn explain-particle
   [token]
   (let [particle (:romaji token)]
@@ -87,5 +95,6 @@
        (= "mo" particle) (explain-mo-particle token)
        (= "wo" particle) (explain-object-particle token)
        (= "ga" particle) (explain-subject-particle token)
-       (= "made" particle) (explain-made-particle token)       
+       (= "made" particle) (explain-made-particle token)
+       (= "n" particle) (explain-n-particle token)              
        :else [:p "Sorry, I don't know this particle yet"])]))

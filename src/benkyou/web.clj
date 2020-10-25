@@ -77,15 +77,16 @@
                                        [:p (str "Like google translate to copy/paste a sentence using Japanese "
                                                 "characters. IME support will be added in the future")]]
                                       :else
-                                      [:div {:class "mt-5 text-3xl"}
-                                       (map (fn [token] [:span {:class (colorize token)} (:kanji token)]) tokens)
-                                       [:br]
-                                       (map (fn [token] [:span {:class (str
-                                                                        (colorize token)
-                                                                        " mr-1 italic font-light")}
-                                                         (:romaji token)]) tokens)]
-                                      [:div {:class "my-5"}]
-                                      (map explain without-punctuation)))}))
+                                      [:div
+                                       [:div {:class "mt-5 text-3xl"}
+                                        (map (fn [token] [:span {:class (colorize token)} (:kanji token)]) tokens)
+                                        [:br]
+                                        (map (fn [token] [:span {:class (str
+                                                                         (colorize token)
+                                                                         " mr-1 italic font-light")}
+                                                          (:romaji token)]) tokens)]
+                                       [:div {:class "my-5"}]
+                                       (map explain without-punctuation)]))}))
 
 (defroutes routes
   (GET "/" req (index req))

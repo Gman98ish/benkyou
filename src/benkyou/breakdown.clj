@@ -9,7 +9,9 @@
   (cond
     (and (= :pronoun particle) (= :noun surface)) :pronoun
     (= :particle surface) :particle
+    (and (= "n" (:romaji token)) (= :affix particle)) :particle
     (= :suffix particle) :suffix
+    (= :main (:particle token)) :verb
     (= :adnominal surface) :adjective
     (= :adjective surface) :adjective
     (= :adjective-base particle) :adjective
