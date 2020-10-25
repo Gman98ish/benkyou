@@ -138,9 +138,25 @@
   [katakana]
   (get katakana->romaji-mapping katakana))
 
+(defn modifies-syllable?
+  [char]
+  (or (= \ャ char)
+      (= \ュ char)
+      (= \ョ char)))
+
 (defn reading->romaji
   [reading]
-  (apply str (map katakana->romaji (map str reading))))
+  (loop [reading reading
+         romaji ""]
+    (let [c (first reading)
+          n (second reading)]
+      (if (empty? reading)
+        romaji
+        (let [r (if (modifies-syllable? n)
+                  (katakana->romaji (str c n))
+                  (katakana->romaji (str c)))]
+          (recur (rest reading) (str romaji r)))))))
+                     
 
 (defn add-romaji
   [token]
