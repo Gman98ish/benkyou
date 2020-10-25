@@ -4,6 +4,9 @@ Benkyou is a Japanese language learning tool. Instead of translating a sentence 
 its components, explains them individually and within their context. This should encourage the user to make
 their own translations, and learn the grammar patterns and phrases themselves.
 
+It also provides links to the dictionary definition of a word. Even if it's conjugated, it'll look it up using the
+dictionary form
+
 At the moment, it only recognises a handful of the most common elements of Japanese, and the explanations are still
 rough. But given enough time, this could be a really handy learning tool/reference.
 

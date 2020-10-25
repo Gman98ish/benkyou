@@ -8,6 +8,10 @@
   [{romaji :romaji}]
   (= "desu" romaji))
 
+(defn is-tai-form?
+  [{romaji :romaji}]
+  (= "tai" (apply str (take-last 3 romaji))))
+
 (defn explain-te-form
   [token]
   [:div
@@ -24,6 +28,14 @@
    [:p "It can also be used to connect two sentences, sort of like 'and', for example"]
    [:p "nomu (to drink) -> nonde (te form) -> nonde taberu (eat and drink)"]])
 
+(defn explain-tai-form
+  [token]
+  [:div
+   [:br]
+   [:p "This verb is conjugated to the tai form"]
+   [:p "This indicates that you want to do something"]
+   [:p "E.g. taberu (to eat) tabetai (want to eat)"]])
+
 (defn explain-desu
   []
   [:div
@@ -36,4 +48,5 @@
    [:p "This is a verb. It's a doing word, or the action of the sentence"]
    (cond
      (is-te-form? token) (explain-te-form token)
+     (is-tai-form? token) (explain-tai-form token)
      (is-desu? token) (explain-desu))])

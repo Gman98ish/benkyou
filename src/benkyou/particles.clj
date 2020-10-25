@@ -73,6 +73,27 @@
    [:p "watashi (meaning I) is the subject of the sentence, shinda is a verb meaning died"]
    [:p "so this sentence means 'I died'"]])
 
+(defn explain-ni-particle
+  [token]
+  [:div
+   [:p "This is by far the most flexible and confusing particle"]
+   [:p "It can be used to indicate, time, place, indirect object, motion, adverbs, and more"]
+   [:br]
+   [:p "The main use cases for it are:"]
+   [:br]
+   [:p [:strong "Time"]]
+   [:p "ni is often used to indicate when something happens e.g. 8:00に (at 8:00)"]
+   [:br]
+   [:p [:strong "Movement"]]
+   [:p "ni is often used with movement verbs to indicate where something is going"]
+   [:p "For example, uchi is home, and iku is go: uchi ni iku (I go home)"]
+   [:br]
+   [:p [:strong "Indirect object"]]
+   [:p "When a verb acts on two things, it has an object and an indirect object"]
+   [:p "A good example of this is the verb send, you can send something to someone"]
+   [:p (str "So 'something' is the object, and 'someone' is the indirect object, 'someone ni' is"
+            " like saying to someone")]])
+
 (defn explain-n-particle
   [token]
   [:div
@@ -96,5 +117,6 @@
        (= "wo" particle) (explain-object-particle token)
        (= "ga" particle) (explain-subject-particle token)
        (= "made" particle) (explain-made-particle token)
-       (= "n" particle) (explain-n-particle token)              
+       (= "ni" particle) (explain-ni-particle token)
+       (= "n" particle) (explain-n-particle token)
        :else [:p "Sorry, I don't know this particle yet"])]))

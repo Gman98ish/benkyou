@@ -11,7 +11,7 @@
     (= :particle surface) :particle
     (and (= "n" (:romaji token)) (= :affix particle)) :particle
     (= :suffix particle) :suffix
-    (= :main (:particle token)) :verb
+    (= "nai" (:romaji token)) :verb
     (= :adnominal surface) :adjective
     (= :adjective surface) :adjective
     (= :adjective-base particle) :adjective
