@@ -14,3 +14,7 @@ If you notice a bad explanation, or a pattern that it doesn't recognise. Please 
 
 If you're a proper Clojure dev and notice something weird I'm doing, please let us know. I'm quite new to Clojure
 and accept that this isn't the nicest of codebases
+
+# Demo
+
+At the time of writing, a demo is hosted on [https://benkyou.joji.dev](https://benkyou.joji.dev)
