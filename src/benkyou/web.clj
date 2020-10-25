@@ -68,7 +68,12 @@
                                      "Back to examples page"]
                                     [:h2 {:class "text-3xl mb-3 mt-6"} "Breakdown"]
                                     [:div {:class "mt-5 text-3xl"}
-                                     (map (fn [token] [:span {:class (colorize token)} (:kanji token)]) tokens)]
+                                     (map (fn [token] [:span {:class (colorize token)} (:kanji token)]) tokens)
+                                     [:br]
+                                     (map (fn [token] [:span {:class (str
+                                                                      (colorize token)
+                                                                      " mr-1 italic font-light")}
+                                                       (:romaji token)]) tokens)]
                                     [:div {:class "my-5"}]
                                     (if (empty? without-punctuation)
                                       [:div {:class "text-lg"}
