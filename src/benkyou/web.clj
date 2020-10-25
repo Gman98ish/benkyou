@@ -59,7 +59,7 @@
 
 (defn analyze
   [request]
-  (let [sentence (get-in request [:query-params "sentence"])
+  (let [sentence (or (get-in request [:query-params "sentence"]) "")
         tokens (breakdown/breakdown-sentence sentence)
         without-punctuation (filter (fn [token] (not (= "" (:romaji token)))) tokens)]
     {:status 200 :headers {} :body (master-template
@@ -67,21 +67,24 @@
                                     [:a {:class "text-blue-700 underline cursor-pointer" :href "/"}
                                      "Back to examples page"]
                                     [:h2 {:class "text-3xl mb-3 mt-6"} "Breakdown"]
-                                    [:div {:class "mt-5 text-3xl"}
-                                     (map (fn [token] [:span {:class (colorize token)} (:kanji token)]) tokens)
-                                     [:br]
-                                     (map (fn [token] [:span {:class (str
-                                                                      (colorize token)
-                                                                      " mr-1 italic font-light")}
-                                                       (:romaji token)]) tokens)]
-                                    [:div {:class "my-5"}]
-                                    (if (empty? without-punctuation)
+                                    (cond
+                                      (empty? sentence) [:p {:class "text-xl"} "Please enter a sentence"]
+                                      (empty? without-punctuation)
                                       [:div {:class "text-lg"}
                                        [:p (str "Looks like you've only entered romaji characters "
                                                 "Unfortunately, we don't support that yet, please use something ")]
                                        
                                        [:p (str "Like google translate to copy/paste a sentence using Japanese "
                                                 "characters. IME support will be added in the future")]]
+                                      :else
+                                      [:div {:class "mt-5 text-3xl"}
+                                       (map (fn [token] [:span {:class (colorize token)} (:kanji token)]) tokens)
+                                       [:br]
+                                       (map (fn [token] [:span {:class (str
+                                                                        (colorize token)
+                                                                        " mr-1 italic font-light")}
+                                                         (:romaji token)]) tokens)]
+                                      [:div {:class "my-5"}]
                                       (map explain without-punctuation)))}))
 
 (defroutes routes
