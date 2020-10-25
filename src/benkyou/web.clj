@@ -81,10 +81,11 @@
                                        [:div {:class "mt-5 text-3xl"}
                                         (map (fn [token] [:span {:class (colorize token)} (:kanji token)]) tokens)
                                         [:br]
-                                        (map (fn [token] [:span {:class (str
-                                                                         (colorize token)
-                                                                         " mr-1 italic font-light")}
-                                                          (:romaji token)]) tokens)]
+                                        [:div {:class "mt-2"}
+                                         (map (fn [token] [:span {:class (str
+                                                                          (colorize token)
+                                                                          " inline-block mr-1 italic font-light")}
+                                                           (:romaji token)]) tokens)]]
                                        [:div {:class "my-5"}]
                                        (map explain without-punctuation)]))}))
 
