@@ -2,7 +2,8 @@
   (:require [benkyou.kuro :as kuro]
             [benkyou.adjectives :as adjectives]
             [benkyou.particles :as particles]
-            [benkyou.verbs :as verbs]))
+            [benkyou.verbs :as verbs]
+            [benkyou.matchers :as matchers]))
 
 (defn- token-type
   [{surface :surface particle :particle :as token}]
@@ -123,6 +124,23 @@
   (-> token
       (update-in [:inflection] dissoc :kuro-token)
       (dissoc :kuro-token)))
+
+(defn kuro-tokens->benkyou-tokens
+  [kuro-tokens]
+  (loop [benkyou-tokens []
+         pos 0]
+    (if (= pos (count kuro-tokens))
+      benkyou-tokens
+      (recur
+       (conj benkyou-tokens {:te-form (matchers/te-form? kuro-tokens pos)})
+       (+ 1 pos)))))
+
+(defn breakdown-sentence
+  [sentence]
+  (->>
+   (kuro/with-tokenizer (kuro/tokenize sentence))
+   (vec)
+   (kuro-tokens->benkyou-tokens)))
 
 (defn breakdown-sentence
   [sentence]
