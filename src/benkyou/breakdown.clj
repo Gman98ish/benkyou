@@ -36,6 +36,10 @@
           (recur (rest (rest unsquashed)) (conj squashed (assoc token :inflection next-token)))
           (recur (rest unsquashed) (conj squashed token)))))))
 
+(defn test
+  []
+  1)
+
 (defn squash-verbs
   [tokens]
   (let [squashed (loop [unsquashed (vec tokens)
@@ -125,15 +129,41 @@
       (update-in [:inflection] dissoc :kuro-token)
       (dissoc :kuro-token)))
 
+(defn- token-type
+  [tokens pos]
+  (matchers/match-cond tokens pos
+                       (matchers/verb?) :verb
+                       (matchers/adjective?) :adjective
+                       (matchers/particle?) :particle
+                       (matchers/adverb?) :adverb
+                       (matchers/noun?) :noun
+                       (matchers/iie?) :iie
+                       (matchers/hai?) :hai))
+
+;;(defn- squash-te-form
+;;  [new-token kuro-tokens pos]
+;;  (if (matchers/te-form? kuro-tokens pos)
+;;    (assoc (merge-next-token kuro-tokens pos) :te-form true)
+;;    new-token))
+      
+      
+      
 (defn kuro-tokens->benkyou-tokens
   [kuro-tokens]
   (loop [benkyou-tokens []
          pos 0]
     (if (= pos (count kuro-tokens))
       benkyou-tokens
-      (recur
-       (conj benkyou-tokens {:te-form (matchers/te-form? kuro-tokens pos)})
-       (+ 1 pos)))))
+      (let [token-type (token-type kuro-tokens pos)
+            token (get kuro-tokens pos)]
+        (recur
+         (conj benkyou-tokens (->
+                               {:type token-type
+                                :original-text (:surface-form token)
+                                :dictionary-form (:conjugation-form token)
+                                :romaji (:original-romaji token)}
+                               (squash-te-form kuro-tokens pos)))
+         (+ 1 pos))))))
 
 (defn breakdown-sentence
   [sentence]
